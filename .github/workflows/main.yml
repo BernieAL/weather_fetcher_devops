@@ -46,37 +46,3 @@ jobs: #define different tasks pipeline will do
           push: true
           tags: yourdockerhub/weather-fetcher:latest
   
-
-  """
-    need to create dockerhub account for this to work
-      why? -
-        we need somewhere to store docker image so:
-          -its publicly acessible for deployment to pull them
-          -is version controlled (each push creates new image)
-          -can be pulled from anywhere
-
-        flow
-          my code -> gh actions -> build Docker img ->
-          push to docker hub -> deployment pulls from docker hub
-
-        think of dockerhub as github for docker images
-
-        could also use AWS ECR, github container registry or google container registry
-
-
-    why does deployment need to pull images?
-      it doesnt have to per-say, my prev approach was to build on the host
-      this meant running docker compose up on the host itself
-
-      but claude says, for larger projects, its better to have gh actions
-      already built the docker image and published it to the dockerhub registry
-      then on the host, instead of doing the build, we just pull the image from dockerhub
-      its "build-once and use anywhere" - more production grade
-          -better for scaling (mult servers can pull same image)
-          -dont need git or build tools on prod servers
-          - can rollback by pulling older image versions
-      
-          building on host is like cooking a meal from scratch each time
-          build and pull on host is like cooking once, freezing portions, and reheating as needed
-  """
-
