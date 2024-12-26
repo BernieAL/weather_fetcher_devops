@@ -5,7 +5,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [ main ] #runs when pushed to main branch
-  pull_requests:
+  pull_request:
     branches: [ main ] #runs when someone makes a PR to main
   
 jobs: #define different tasks pipeline will do
