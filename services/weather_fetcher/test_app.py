@@ -1,3 +1,8 @@
+
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from app import app
 import pytest
 from unittest.mock import patch 
