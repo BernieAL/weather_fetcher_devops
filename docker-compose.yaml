@@ -1,0 +1,28 @@
+version: '3'
+services:
+  weather_fetcher:
+    build:
+      context: ./services/weather_fetcher
+      dockerfile: Dockerfile.weather_fetcher
+    ports: 
+      - "5000:5000"
+    environment:
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+
+  weather_processor:
+    build: 
+      context: ./services/weather_processor
+      dockerfile: Dockerfile.weather_processor
+    ports:
+      - "5001:5001"
+    depends_on:
+      - weather_fetcher
+
+  api_gateway:
+    build: 
+      context: ./services/api_gateway
+      dockerfile: Dockerfile.api_gateway
+    ports:
+      - "5002:5002"
+    depends_on:
+      - weather_processor
