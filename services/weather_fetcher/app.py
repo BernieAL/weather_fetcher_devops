@@ -1,8 +1,13 @@
-from flask import Flask, jsonify
-import requests
-from config import API_KEY
-from dotenv import load_dotenv
+import sys
 import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from app import app
+import pytest
+from unittest.mock import patch
+import requests
+from dotenv import load_dotenv
+from flask import Flask, jsonify
+
 
 load_dotenv()
 API_KEY = os.getenv('OPENWEATHER_API_KEY')
