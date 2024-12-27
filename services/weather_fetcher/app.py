@@ -1,13 +1,9 @@
 import sys
-import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from app import app
-import pytest
-from unittest.mock import patch
+from flask import Flask, jsonify
 import requests
 from dotenv import load_dotenv
-from flask import Flask, jsonify
-
+import os
 
 load_dotenv()
 API_KEY = os.getenv('OPENWEATHER_API_KEY')

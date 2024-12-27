@@ -1,11 +1,9 @@
 
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import pytest
+from flask import Flask
+from unittest.mock import patch
 
 from app import app
-import pytest
-from unittest.mock import patch 
 
 
 @pytest.fixture
