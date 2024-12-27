@@ -1,9 +1,9 @@
-import sys
+import os,sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from flask import Flask, jsonify
 import requests
 from dotenv import load_dotenv
-import os
+
 
 load_dotenv()
 API_KEY = os.getenv('OPENWEATHER_API_KEY')
