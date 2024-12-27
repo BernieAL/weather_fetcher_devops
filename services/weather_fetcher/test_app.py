@@ -1,8 +1,9 @@
 
 import pytest
+import os,sys
 from flask import Flask
 from unittest.mock import patch
-
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from app import app
 
 
