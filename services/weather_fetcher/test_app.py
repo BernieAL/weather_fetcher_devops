@@ -19,7 +19,10 @@ def test_fetch_weather(mock_get,client):
     #setup mock response
 
     mock_get.return_value.json.return_value = {
-        "main": {"temp":20},
+        "main": {
+            "temp":20,
+            "humidity":65
+        },
         "weather": [{"description": "clear"}],
         "wind":{"speed":5}
     }
