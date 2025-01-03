@@ -45,3 +45,19 @@ jobs: #define different tasks pipeline will do
           file: ./services/weather_fetcher/Dockerfile.weather_fetcher  
           push: true
           tags: balmanzar883/weather-fetcher:latest
+
+      - name: Build and push weather processor
+        uses: docker/build-push-action@v2
+        with:
+          context: ./services/weather_processor
+          file: ./services/weather_processor/Dockerfile.weather_processor
+          push: true
+          tags: balmanzar883/weather-processor:latest
+
+      - name: Build and push api gateway
+        uses: docker/build-push-action@v2
+        with:
+          context: ./services/api_gateway
+          file: ./services/api_gateway/Dockerfile.api_gateway
+          push: true
+          tags: balmanzar883/api-gateway:latest
