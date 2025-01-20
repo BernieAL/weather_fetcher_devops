@@ -26,3 +26,5 @@ variable "openweather_api_key" {
   description = "OpenWeather API Key"
   type        = string
 }
+
+
