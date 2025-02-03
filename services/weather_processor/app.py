@@ -7,6 +7,11 @@ app = Flask(__name__)
 FETCHER_URL = 'http://weather_fetcher:5000'
 PROCESSOR_URL = 'http://weather_processor:5001'
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy"}), 200
+
+
 @app.route('/process/<city>')
 def process_weather(city):
     # Get data from weather fetcher

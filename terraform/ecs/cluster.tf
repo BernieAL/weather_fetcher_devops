@@ -31,13 +31,33 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   })
 }
 
-# Attach AWS managed policy for ECS task execution
+# Attach AWS managed policy to ecs task execution role
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-# IAM Role for ECS Task Role (for application permissions)
+# custom permissions for ecs task execution role
+resource "aws_iam_role_policy" "ecs_task_execution_role_policy" {
+  name = "weather-app-task-execution-policy"
+  role = aws_iam_role.ecs_task_execution_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:CreateLogGroup"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role" "ecs_task_role" {
   name = "weather-app-task-role"
 
@@ -55,7 +75,6 @@ resource "aws_iam_role" "ecs_task_role" {
   })
 }
 
-# Additional permissions for tasks (e.g., for weather API calls)
 resource "aws_iam_role_policy" "ecs_task_role_policy" {
   name = "weather-app-task-policy"
   role = aws_iam_role.ecs_task_role.id
@@ -83,3 +102,6 @@ resource "aws_iam_role_policy" "ecs_task_role_policy" {
 # Data sources
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
+
+
+

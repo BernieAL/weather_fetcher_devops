@@ -41,20 +41,20 @@ resource "aws_lb" "main" {
 # API Gateway Target Group (Main entry point)
 resource "aws_lb_target_group" "api_gateway" {
   name        = "weather-api-gateway-tg"
-  port        = 5000
+  port        = 5002
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
 
   health_check {
     healthy_threshold   = 2
-    interval           = 30
-    protocol           = "HTTP"
-    matcher            = "200"
-    timeout            = 5
-    path              = "/health"
+    interval            = 30
+    protocol            = "HTTP"
+    matcher             = "200"
+    timeout             = 5
+    path                = "/health"
     unhealthy_threshold = 2
-    port              = 5000
+    port                = 5002
   }
 }
 

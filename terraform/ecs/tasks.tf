@@ -15,7 +15,7 @@ resource "aws_ecs_task_definition" "api_gateway" {
       image = "${var.api_gateway_repository_url}:latest"
       portMappings = [
         {
-          containerPort = 5000
+          containerPort = 5002
           protocol      = "tcp"
         }
       ]
@@ -37,6 +37,13 @@ resource "aws_ecs_task_definition" "api_gateway" {
           "awslogs-stream-prefix" = "ecs"
         }
       }
+       healthCheck = {
+      command     = ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]  # Port should match your container port
+      interval    = 30
+      timeout     = 5
+      retries     = 3
+      startPeriod = 60
+    }
     }
   ])
 }
@@ -75,6 +82,13 @@ resource "aws_ecs_task_definition" "weather_fetcher" {
           "awslogs-stream-prefix" = "ecs"
         }
       }
+       healthCheck = {
+      command     = ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]  # Port should match your container port
+      interval    = 30
+      timeout     = 5
+      retries     = 3
+      startPeriod = 60
+    }
     }
   ])
 }
@@ -95,11 +109,11 @@ resource "aws_ecs_task_definition" "weather_processor" {
       image = "${var.weather_processor_repository_url}:latest"
       portMappings = [
         {
-          containerPort = 5000
+          containerPort = 5001
           protocol      = "tcp"
         }
       ]
-      environment = [
+      environment = [ 
         {
           name  = "FETCHER_SERVICE_URL"
           value = "http://weather-fetcher.weather.local:5000"
@@ -114,6 +128,13 @@ resource "aws_ecs_task_definition" "weather_processor" {
           "awslogs-stream-prefix" = "ecs"
         }
       }
+       healthCheck = {
+      command     = ["CMD-SHELL", "curl -f http://localhost:5001/health || exit 1"]  # Port should match your container port
+      interval    = 30
+      timeout     = 5
+      retries     = 3
+      startPeriod = 60
+    }
     }
   ])
 }

@@ -15,9 +15,9 @@ FETCHER_URL = 'http://weather_fetcher:5000'
 PROCESSOR_URL = 'http://weather_processor:5001'
 
 
-@app.route('/health')
+@app.route('/health', methods=['GET'])
 def health_check():
-    return jsonify({"status": "healthy"})
+    return jsonify({"status": "healthy"}), 200
 
 @app.route('/fetch/<city>')
 def fetch_weather(city):

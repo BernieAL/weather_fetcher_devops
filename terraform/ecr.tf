@@ -2,7 +2,8 @@
 resource "aws_ecr_repository" "api_gateway" {
   name                 = "weather-app-gateway"
   image_tag_mutability = "MUTABLE"
-
+  force_delete         = true
+  
   image_scanning_configuration {
     scan_on_push = true
   }
@@ -16,6 +17,7 @@ resource "aws_ecr_repository" "api_gateway" {
 resource "aws_ecr_repository" "weather_fetcher" {
   name                 = "weather-app-fetcher"
   image_tag_mutability = "MUTABLE"
+  force_delete         = true
 
   image_scanning_configuration {
     scan_on_push = true
@@ -31,6 +33,7 @@ resource "aws_ecr_repository" "weather_fetcher" {
 resource "aws_ecr_repository" "weather_processor" {
   name                 = "weather-app-processor"
   image_tag_mutability = "MUTABLE"
+  force_delete         = true
 
   image_scanning_configuration {
     scan_on_push = true

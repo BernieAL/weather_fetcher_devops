@@ -10,7 +10,8 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region = "us-east-1"
+  region  = "us-east-1"
+  profile = "admin_user"
 }
 
 #Create a VPC
@@ -81,10 +82,10 @@ resource "aws_eip" "nat" {
   }
 }
 
- #Create NAT Gateway
+#Create NAT Gateway
 resource "aws_nat_gateway" "main" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public_1.id  # Place NAT Gateway in first public subnet
+  subnet_id     = aws_subnet.public_1.id # Place NAT Gateway in first public subnet
 
   tags = {
     Name = "weather-app-nat"
@@ -144,7 +145,7 @@ resource "aws_route_table_association" "public_2" {
   route_table_id = aws_route_table.public.id
 }
 
- #Associate private subnets with private route table
+#Associate private subnets with private route table
 resource "aws_route_table_association" "private_1" {
   subnet_id      = aws_subnet.private_1.id
   route_table_id = aws_route_table.private.id
@@ -157,15 +158,15 @@ resource "aws_route_table_association" "private_2" {
 
 # Call ECS module
 #ecs module call references vpc from main, security group from alb, and the three
-  #ecr repos from from ecr
+#ecr repos from from ecr
 module "ecs" {
   source = "./ecs"
 
-  vpc_id                         = aws_vpc.main.id
-  private_subnet_ids             = [aws_subnet.private_1.id, aws_subnet.private_2.id]
+  vpc_id                           = aws_vpc.main.id
+  private_subnet_ids               = [aws_subnet.private_1.id, aws_subnet.private_2.id]
   target_group_arn                 = aws_lb_target_group.api_gateway.arn
-  alb_security_group_id         = aws_security_group.alb.id
-  api_gateway_repository_url    = aws_ecr_repository.api_gateway.repository_url
-  weather_fetcher_repository_url = aws_ecr_repository.weather_fetcher.repository_url
+  alb_security_group_id            = aws_security_group.alb.id
+  api_gateway_repository_url       = aws_ecr_repository.api_gateway.repository_url
+  weather_fetcher_repository_url   = aws_ecr_repository.weather_fetcher.repository_url
   weather_processor_repository_url = aws_ecr_repository.weather_processor.repository_url
 }

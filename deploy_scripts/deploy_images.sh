@@ -22,9 +22,9 @@ fi
 
 # Define service mappings (directory name -> ECR repository name)
 declare -A service_mappings=(
-    ["api_gateway"]="weather-app-api-gateway"
-    ["weather_fetcher"]="weather-app-weather-fetcher"
-    ["weather_processor"]="weather-app-weather-processor"
+    ["api_gateway"]="weather-app-gateway"
+    ["weather_fetcher"]="weather-app-fetcher"
+    ["weather_processor"]="weather-app-processor"
 )
 
 # Process each service
